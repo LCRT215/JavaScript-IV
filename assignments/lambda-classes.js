@@ -24,11 +24,16 @@ class Instructor extends Person {
   grade(student, subject) {
     console.log(`${student} receives a perfect score on ${subject}.`);
   }
+  gradeRandom(studentGrade) {
+    let random = Math.floor(Math.random() * 20);
+    console.log(studentGrade + random);
+  }
 }
 
 class Student extends Person {
   constructor(student) {
     super(student);
+    this.grade = student.grade;
     this.previousBackground = student.previousBackground;
     this.className = student.className;
     this.favSubjects = student.favSubjects;
@@ -38,6 +43,13 @@ class Student extends Person {
   }
   PRAssignment(subject) {
     console.log(`${this.name} has submitted a PR for ${subject}.`);
+  }
+  graduate(studentGrade) {
+    if (studentGrade > 70) {
+      console.log("Ready to graduate Lambda School!");
+    } else {
+      console.log("We have a little more work to do!");
+    }
   }
 }
 
@@ -49,7 +61,7 @@ class ProjectManager extends Instructor {
   }
   standUp(slackChannel) {
     console.log(
-      `${this.name} announces to ${slackChannel}, @channel standup times!`
+      `${this.name} announces to ${slackChannel} @channel standup times!`
     );
   }
   debugsCode(student, subject) {
@@ -67,6 +79,7 @@ const leslie_t = new Student({
   gender: "F",
   previousBackground: "Retail Management",
   className: "Web18",
+  grade: 80,
   favSubjects: ["CSS", "JavaScript", "Cooking", "Biology"]
 });
 
@@ -84,16 +97,6 @@ const christian_ipanaque = new Student({
     "Data Structures",
     "Computer Architecture"
   ]
-});
-
-const liz_B = new Student({
-  name: "Lizzy B",
-  age: 27,
-  gender: "Female",
-  location: "Portland, OR",
-  previousBackground: "Biology/Health Science grad",
-  className: "WEB12",
-  favSubjects: ["CSS", "React", "Ternaries", "SQL", "Node"]
 });
 
 const tracy_pilcher = new Student({
@@ -117,6 +120,16 @@ const chantal = new Instructor({
   catchPhrase: "You got this!"
 });
 
+const joshz = new Instructor({
+  name: "Josh Zieger",
+  age: 35,
+  gender: "Male",
+  location: "Scranton, PA",
+  previousBackground: "Food Safety Manager , Commercial Hydroponic Grower",
+  className: "WEB15",
+  favSubjects: ["CSS", "React", "Spaaaace!", "early american history"]
+});
+
 // Project Managers
 const renee = new ProjectManager({
   name: "Renee",
@@ -130,12 +143,28 @@ const renee = new ProjectManager({
   favInstructor: "Josh Knell"
 });
 
+const liz_B = new ProjectManager({
+  name: "Lizzy B",
+  age: 27,
+  gender: "Female",
+  location: "Portland, OR",
+  previousBackground: "Biology/Health Science grad",
+  className: "WEB12",
+  favSubjects: ["CSS", "React", "Ternaries", "SQL", "Node"]
+});
+
 //Calling
 
 console.log(renee.catchPhrase);
 console.log(leslie_t.name); // Leslie
 console.log(chantal.specialty); //JavaScript
+console.log(leslie_t.grade);
+console.log(christian_ipanaque.favSubjects);
 renee.speak(); //Hello, My name is Renee, I am from Philadelphia,PA.
 chantal.grade("Leslie", "HTML");
 chantal.demo("CS");
 renee.debugsCode(leslie_t.name, "css");
+joshz.gradeRandom(leslie_t.grade);
+leslie_t.graduate(leslie_t.grade);
+liz_B.standUp("Web 18");
+leslie_t.listsSubjects();
